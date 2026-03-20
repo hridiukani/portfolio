@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400&family=Inter:wght@300;400&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f0ece0;
+  --grid-color: rgba(180, 175, 155, 0.45);
+  --dark-olive: #6b6d47;
+  --text-title: #7a7a5a;
+  --folder-yellow: #f5e67a;
+  --folder-shadow: #d4c94a;
+  --icon-green: #4a5430;
+  --window-bg: #faf8f0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Desktop ─────────────────────────────────────── */
+.desktop {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+/* Grid paper background */
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+
+/* ── PORTFOLIO title ─────────────────────────────── */
+.title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 100;
+  font-size: clamp(3rem, 10vw, 8rem);
+  letter-spacing: 0.18em;
+  color: var(--text-title);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Desktop icons ───────────────────────────────── */
+.icon {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  width: 90px;
+  text-align: center;
+}
+
+.icon span {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: var(--text-title);
+  letter-spacing: 0.04em;
+}
+
+.icon:hover span {
+  color: var(--icon-green);
+}
+
+/* Profile icon */
+.profile-icon { top: 6%; left: 8%; }
+
+.app-icon.green-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--icon-green);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #e8e4d0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.icon:hover .app-icon.green-icon {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(74, 84, 48, 0.35);
+}
+
+/* Works icon */
+.works-icon { top: 35%; left: 8%; }
+
+/* Contact icon */
+.contact-icon { top: 6%; right: 8%; }
+
+/* Resume icon */
+.resume-icon { top: 38%; right: 8%; }
+
+/* Folder icon styles */
+.folder-img {
+  width: 80px;
+  height: 68px;
+  object-fit: contain;
+  transition: transform 0.15s ease;
+  filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.12));
+}
+
+.folder-fallback {
+  font-size: 4rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.icon:hover .folder-img,
+.icon:hover .folder-fallback {
+  transform: scale(1.08);
+}
+
+/* Inline SVG folder (used as default) */
+.folder-svg {
+  width: 80px;
+  height: 68px;
+}
+
+/* ── Taskbar ─────────────────────────────────────── */
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: var(--dark-olive);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.social-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.social-btn svg {
+  width: 26px;
+  height: 26px;
+  stroke: white;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.linkedin  { background: #0077b5; }
+.github    { background: #24292e; }
+.behance   { background: #1769ff; }
+.dribbble  { background: #ea4c89; }
+
+/* Behance svg uses fill */
+.behance svg { fill: white; stroke: none; }
+
+/* ── Windows ─────────────────────────────────────── */
+.window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  max-width: 90vw;
+  background: var(--window-bg);
+  border: 1.5px solid #ccc9b4;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  z-index: 100;
+  font-family: 'Inter', sans-serif;
+  animation: popIn 0.2s ease;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.window.hidden { display: none; }
+
+.window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--dark-olive);
+  border-radius: 10px 10px 0 0;
+}
+
+.window-title {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.9rem;
+  color: #e8e4d0;
+  letter-spacing: 0.06em;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #e8e4d0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+  padding: 2px 6px;
+}
+
+.close-btn:hover { opacity: 1; }
+
+.window-content {
+  padding: 28px 28px;
+  color: #555;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.window-content h2 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: var(--text-title);
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+}
+
+.window-content a {
+  color: var(--icon-green);
+}
+
+/* Works grid */
+.works-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.work-item {
+  background: #e8e4d0;
+  border-radius: 8px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  color: var(--text-title);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.work-item:hover { background: #d8d4c0; }
+
+/* Download button */
+.download-btn {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 24px;
+  background: var(--icon-green);
+  color: #e8e4d0;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  transition: background 0.15s;
+}
+
+.download-btn:hover { background: #5a6340; }
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 90;
+}
