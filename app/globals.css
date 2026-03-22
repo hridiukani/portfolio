@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500&family=Josefin+Sans:wght@100;200;300;400&family=Inter:wght@300;400&family=Caveat:wght@400;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fdf0f5;
+  --grid-color: rgba(225, 130, 175, 0.2);
+  --primary: #e8407e;
+  --primary-deep: #b02060;
+  --primary-light: #ffc8e0;
+  --lavender: #c8a0e0;
+  --blush: #f7d0e4;
+  --text-title: #d0406e;
+  --text-muted: #b87098;
+  --window-bg: #fff8fb;
+  --folder-main: #ffb8d4;
+  --folder-shadow: #e890b8;
+}
+
+html, body { height: 100%; width: 100%; overflow: hidden; font-family: 'Inter', sans-serif; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.65; transform: scale(1.25) rotate(18deg); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-pop { animation: popIn 0.18s ease; }
+
+/* Retro window shared body styles */
+.r-body { display: flex; gap: 12px; padding: 14px; background: #fff5f9; flex: 1; overflow-y: auto; min-height: 0; }
+.r-body--projects { flex-direction: column; gap: 10px; background: #faf5ff; flex: 1; overflow-y: auto; min-height: 0; }
+.r-body--exp { flex-direction: column; gap: 8px; background: #fff5f9; flex: 1; overflow-y: auto; min-height: 0; }
+
+.r-photo-col { display: flex; flex-direction: column; width: 100px; flex-shrink: 0; }
+.r-photo { width: 100px; height: 100px; background: repeating-conic-gradient(#f0d0e0 0% 25%, #fdf0f5 0% 50%) 0 0/12px 12px; border: 2px solid #1a0810; display: flex; align-items: center; justify-content: center; font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 0.9rem; color: #c44d82; letter-spacing: 0.08em; }
+.r-photo-name { text-align: center; font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 0.58rem; letter-spacing: 0.1em; color: white; padding: 4px 2px; }
+
+.r-info-col { flex: 1; display: flex; flex-direction: column; gap: 9px; justify-content: center; }
+.r-row { display: flex; align-items: center; gap: 8px; }
+.r-lbl { font-family: 'Josefin Sans', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.14em; color: #886080; min-width: 58px; }
+.r-val { font-family: 'Josefin Sans', sans-serif; font-size: 0.77rem; font-weight: 300; color: #2a0a1a; letter-spacing: 0.04em; }
+.r-link { font-family: 'Josefin Sans', sans-serif; font-size: 0.74rem; font-weight: 300; color: #6b7ee8; text-decoration: none; letter-spacing: 0.02em; border-bottom: 1px solid rgba(107,126,232,0.3); }
+
+.r-side-col { width: 118px; flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+.r-side-label { font-family: 'Josefin Sans', sans-serif; font-size: 0.57rem; font-weight: 400; letter-spacing: 0.14em; color: #886080; margin-top: 6px; }
+.r-side-label:first-child { margin-top: 0; }
+.r-tag { display: inline-block; font-family: 'Josefin Sans', sans-serif; font-size: 0.57rem; font-weight: 400; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 3px; margin: 1px 2px 1px 0; }
+
+.r-proj-card { background: white; border: 1.5px solid #d8c0e8; border-radius: 8px; padding: 12px 14px; }
+.r-proj-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+.r-proj-name { font-family: 'Josefin Sans', sans-serif; font-weight: 400; font-size: 0.8rem; letter-spacing: 0.15em; color: #2a0a1a; }
+.r-proj-date { font-family: 'Josefin Sans', sans-serif; font-size: 0.57rem; font-weight: 400; letter-spacing: 0.06em; color: white; padding: 2px 9px; border-radius: 3px; }
+.r-proj-stack { font-family: 'Josefin Sans', sans-serif; font-size: 0.62rem; font-weight: 300; color: #9b6fd4; letter-spacing: 0.04em; margin-bottom: 6px; }
+.r-proj-desc { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: #5a3060; line-height: 1.55; }
+
+.r-exp-item { display: flex; align-items: center; justify-content: space-between; background: white; border: 1.5px solid #e0c0d4; border-radius: 6px; padding: 10px 12px; gap: 10px; }
+.r-exp-info { display: flex; flex-direction: column; gap: 3px; }
+.r-exp-role { font-family: 'Josefin Sans', sans-serif; font-weight: 400; font-size: 0.72rem; letter-spacing: 0.1em; color: #2a0a1a; }
+.r-exp-company { font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 0.62rem; letter-spacing: 0.04em; color: #886080; }
+.r-exp-date { font-family: 'Josefin Sans', sans-serif; font-size: 0.57rem; font-weight: 400; letter-spacing: 0.06em; color: white; padding: 3px 9px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+
+.r-dl-btn { display: inline-block; font-family: 'Josefin Sans', sans-serif; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.12em; color: white; text-decoration: none; padding: 5px 20px; border-radius: 20px; margin-top: 4px; }
+.r-loading { padding: 5px 12px; background: #f5eef2; border-top: 1.5px solid #e0c0d0; font-family: 'Josefin Sans', sans-serif; font-size: 0.57rem; letter-spacing: 0.06em; color: #b87098; display: flex; align-items: center; gap: 8px; }
+.r-bar { font-size: 0.45rem; letter-spacing: -0.02em; }
+
+.r-urlbar { display: flex; align-items: center; gap: 8px; padding: 5px 10px; background: #f5eef2; border-bottom: 1.5px solid #e0c0d0; }
+.r-refresh { font-size: 1rem; color: #b87098; cursor: pointer; line-height: 1; }
+.r-url { flex: 1; font-family: 'Inter', sans-serif; font-size: 0.7rem; color: #7a5068; background: white; border: 1.5px solid #e0c0d4; border-radius: 4px; padding: 3px 10px; }
+.r-urlicon { font-size: 0.85rem; color: #b87098; }
+
+.r-hearts { padding: 3px 10px; font-size: 0.55rem; color: rgba(255,255,255,0.55); letter-spacing: 0.18em; white-space: nowrap; overflow: hidden; }
+
+.deco-star { position: absolute; color: #e8407e; pointer-events: none; user-select: none; animation: twinkle 4s ease-in-out infinite; }
+
+/* Skills window body */
+.r-body--skills { flex-direction: column; gap: 0; background: #fff5f9; flex: 1; overflow-y: auto; min-height: 0; padding: 16px 18px; }
+
+/* Skill pill badges */
+@keyframes pillFadeIn {
+  from { opacity: 0; transform: scale(0.75) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.skill-pill {
+  display: inline-flex; align-items: center;
+  padding: 3px 11px; border-radius: 20px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.62rem; font-weight: 300; letter-spacing: 0.08em;
+  border: 1px solid transparent;
+  animation: pillFadeIn 0.35s ease both;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: default;
+}
+.skill-pill:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
