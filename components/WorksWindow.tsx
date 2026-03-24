@@ -6,7 +6,7 @@ export default function WorksWindow({ open, onClose, zIndex, onFocus }: Props) {
   return (
     <RetroWindow
       id="works" open={open} onClose={onClose} zIndex={zIndex} onFocus={onFocus}
-      accent="#9b6fd4" title="PROJECTS" searchText="LOOKING FOR ATTENTION !!!"
+      accent="#9b6fd4" title="PROJECTS" searchText="github.com/hridiukani"
       url="https://github.com/hridiukani" bodyClass="r-body r-body--projects"
       initialPos={{ x: 120, y: 120 }}
     >

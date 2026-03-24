@@ -38,7 +38,7 @@ export default function MenuBar() {
         }}>
           <span style={{ color: '#ff4da6', fontSize: '0.9rem' }}>✦</span>
           <span style={{
-            fontFamily: "'Josefin Sans', sans-serif",
+            fontFamily: "'Syne', sans-serif",
             fontWeight: 400, fontSize: '0.8rem',
             letterSpacing: '0.22em',
             color: 'white',
@@ -55,11 +55,11 @@ export default function MenuBar() {
       {/* Right — date + time pill */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <span style={{
-          fontFamily: "'Josefin Sans', sans-serif",
+          fontFamily: "'Syne', sans-serif",
           fontSize: '0.62rem', fontWeight: 300,
           letterSpacing: '0.08em',
           color: 'rgba(255,180,210,0.5)',
-        }}>{date}</span>
+        }} suppressHydrationWarning>{date}</span>
 
         <div style={{
           background: 'rgba(232, 64, 126, 0.15)',
@@ -70,11 +70,11 @@ export default function MenuBar() {
         }}>
           <span style={{ color: '#ff6eb0', fontSize: '0.55rem' }}>●</span>
           <span style={{
-            fontFamily: "'Josefin Sans', sans-serif",
+            fontFamily: "'Syne', sans-serif",
             fontSize: '0.7rem', fontWeight: 400,
             letterSpacing: '0.1em',
             color: '#ffb3d9',
-          }}>{time}</span>
+          }} suppressHydrationWarning>{time}</span>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@ function MenuBarItem({ label }: { label: string }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        fontFamily: "'Josefin Sans', sans-serif",
+        fontFamily: "'Syne', sans-serif",
         fontSize: '0.68rem', fontWeight: 300,
         letterSpacing: '0.12em',
         color: hovered ? 'white' : 'rgba(255,180,210,0.6)',

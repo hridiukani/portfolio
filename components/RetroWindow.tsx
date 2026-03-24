@@ -15,6 +15,7 @@ interface RetroWindowProps {
   zIndex: number;
   onFocus: () => void;
   initialPos: { x: number; y: number };
+  initialSize?: { w: number; h: number };
 }
 
 type ResizeDir = 'e' | 's' | 'w' | 'n' | 'se' | 'sw' | 'ne' | 'nw';
@@ -25,10 +26,10 @@ const MIN_H = 260;
 export default function RetroWindow({
   open, onClose, accent, title, searchText, url,
   heartsChar = '♥ ✦', bodyClass = 'r-body', children,
-  zIndex, onFocus, initialPos,
+  zIndex, onFocus, initialPos, initialSize,
 }: RetroWindowProps) {
   const [pos,  setPos]  = useState(initialPos);
-  const [size, setSize] = useState({ w: 700, h: 340 });
+  const [size, setSize] = useState(initialSize ?? { w: 700, h: 340 });
 
   const dragging  = useRef(false);
   const resizing  = useRef<ResizeDir | null>(null);
@@ -135,10 +136,10 @@ export default function RetroWindow({
             <span key={i} style={{ width: 11, height: 11, borderRadius: '50%', background: c, border: '1px solid rgba(0,0,0,0.18)', display: 'inline-block' }} />
           ))}
         </div>
-        <span style={{ fontFamily: "'Josefin Sans', sans-serif", fontWeight: 400, fontSize: '0.7rem', color: 'white', letterSpacing: '0.22em', flexShrink: 0 }}>
+        <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 400, fontSize: '0.7rem', color: 'white', letterSpacing: '0.22em', flexShrink: 0 }}>
           {title}
         </span>
-        <div style={{ flex: 1, background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 4, padding: '2px 8px', fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.58rem', fontWeight: 300, letterSpacing: '0.1em', color: 'white', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+        <div style={{ flex: 1, background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 4, padding: '2px 8px', fontFamily: "'Syne', sans-serif", fontSize: '0.58rem', fontWeight: 300, letterSpacing: '0.1em', color: 'white', whiteSpace: 'nowrap', overflow: 'hidden' }}>
           🔍 {searchText}
         </div>
         <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)', color: 'white', fontSize: '0.62rem', cursor: 'pointer', padding: '2px 7px', borderRadius: 3, flexShrink: 0 }}>✕</button>

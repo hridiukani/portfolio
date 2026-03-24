@@ -6,7 +6,7 @@ export default function ProfileWindow({ open, onClose, zIndex, onFocus }: Props)
   return (
     <RetroWindow
       id="profile" open={open} onClose={onClose} zIndex={zIndex} onFocus={onFocus}
-      accent="#e8407e" title="HRIDI UKANI" searchText="LOOKING FOR SWE ROLES !!!"
+      accent="#e8407e" title="HRIDI UKANI" searchText="hridiukani.vercel.app"
       url="https://hridiukani.vercel.app" initialPos={{ x: 60, y: 80 }}
     >
       <div className="r-photo-col">

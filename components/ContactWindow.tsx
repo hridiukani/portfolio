@@ -6,7 +6,7 @@ export default function ContactWindow({ open, onClose, zIndex, onFocus }: Props)
   return (
     <RetroWindow
       id="contact" open={open} onClose={onClose} zIndex={zIndex} onFocus={onFocus}
-      accent="#6b7ee8" title="CONTACT" searchText="OPEN TO OPPORTUNITIES !!!"
+      accent="#6b7ee8" title="CONTACT" searchText="mailto:hridi.ukani@gmail.com"
       url="mailto:hridi.ukani@gmail.com" initialPos={{ x: 180, y: 100 }}
     >
       <div className="r-photo-col">

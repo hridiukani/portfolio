@@ -83,7 +83,7 @@ export default function DesktopIcon({ x, y, label, onOpen, children }: Props) {
 
       {/* Label with selection highlight */}
       <span style={{
-        fontFamily: "'Josefin Sans', sans-serif",
+        fontFamily: "'Syne', sans-serif",
         fontWeight: 300, fontSize: '0.85rem',
         letterSpacing: '0.06em',
         color: selected ? '#fff' : 'var(--text-muted)',

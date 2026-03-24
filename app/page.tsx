@@ -8,8 +8,6 @@ import BootScreen from '@/components/BootScreen';
 import MenuBar from '@/components/MenuBar';
 import DesktopIcon from '@/components/DesktopIcon';
 import SkillsWindow from '@/components/SkillsWindow';
-import NowPlaying from '@/components/NowPlaying';
-import StickyNote from '@/components/StickyNote';
 
 type WindowName = 'profile' | 'works' | 'contact' | 'resume' | 'skills';
 
@@ -22,27 +20,47 @@ const FolderIcon = () => (
   </svg>
 );
 
-const sparkles = [
-  { top: '16%', left: '22%',  fontSize: '1.1rem',  animationDelay: '0s' },
-  { top: '58%', left: '34%',  fontSize: '0.65rem', animationDelay: '1.2s' },
-  { top: '28%', right: '24%', fontSize: '0.9rem',  animationDelay: '0.5s' },
-  { top: '68%', right: '30%', fontSize: '1.2rem',  animationDelay: '2.1s' },
-  { top: '11%', left: '46%',  fontSize: '0.55rem', animationDelay: '1.7s' },
-  { top: '78%', left: '18%',  fontSize: '0.75rem', animationDelay: '0.9s' },
-  { top: '44%', right: '14%', fontSize: '0.6rem',  animationDelay: '3s' },
-];
-
 const dockLinks = [
   { href: 'https://linkedin.com/in/hridiukani1807', title: 'LinkedIn', bg: 'linear-gradient(135deg,#38bdf8,#0077b5)',
     svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> },
   { href: 'https://github.com/hridiukani', title: 'GitHub', bg: 'linear-gradient(135deg,#c084fc,#7c3aed)',
     svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> },
-  { href: 'https://behance.net', title: 'Behance', bg: 'linear-gradient(135deg,#93c5fd,#1769ff)',
-    svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029L23.726 17zm-8.714-3.333h4.966c-.123-1.957-1.363-2.165-2.402-2.165-1.142 0-2.306.585-2.564 2.165z"/></svg> },
-  { href: 'https://dribbble.com', title: 'Dribbble', bg: 'linear-gradient(135deg,#fb7bb8,#e8407e)',
-    svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg> },
 ];
 
+
+function DockIcon({ href, title, bg, children }: { href: string; title: string; bg: string; children: React.ReactNode }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {hovered && (
+        <div style={{
+          position: 'absolute', bottom: 'calc(100% + 12px)',
+          background: 'rgba(255,255,255,0.92)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          color: '#1a0a14', fontSize: '0.72rem',
+          fontFamily: "'Syne', sans-serif", fontWeight: 500,
+          letterSpacing: '0.04em',
+          padding: '5px 12px', borderRadius: 8, whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08), inset 0 0.5px 0 rgba(255,255,255,0.9)',
+          border: '0.5px solid rgba(0,0,0,0.08)',
+        }}>{title}</div>
+      )}
+      <a href={href} target="_blank" style={{
+        width: 50, height: 50, borderRadius: 14, background: bg,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        textDecoration: 'none',
+        transform: hovered ? 'translateY(-8px) scale(1.12)' : '',
+        transition: 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}>
+        {children}
+      </a>
+    </div>
+  );
+}
 
 export default function Home() {
   const [booted, setBooted] = useState(false);
@@ -100,18 +118,14 @@ export default function Home() {
       <h1 style={{
         position: 'absolute', top: '50%', left: '50%',
         transform: 'translate(-50%, -50%)',
-        fontFamily: "'Playfair Display', serif", fontStyle: 'italic', fontWeight: 400,
+        fontFamily: "'Syne', sans-serif", fontStyle: 'normal', fontWeight: 300,
         fontSize: 'clamp(3rem, 10vw, 8rem)', letterSpacing: '0.12em',
         color: 'var(--text-title)', opacity: 0.15, whiteSpace: 'nowrap',
         pointerEvents: 'none', userSelect: 'none',
       }}>
-        hridi ukani
+        Hridi Ukani
       </h1>
 
-      {/* Sparkles */}
-      {sparkles.map((s, i) => (
-        <span key={i} className="deco-star" style={s}>✦</span>
-      ))}
 
       {/* Desktop icons — rendered only after positions are computed client-side */}
       {iconPos && (
@@ -121,7 +135,7 @@ export default function Home() {
               width: 72, height: 72,
               background: 'linear-gradient(135deg, #e8407e 0%, #c8a0e0 100%)',
               borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: "'Josefin Sans', sans-serif", fontWeight: 200, fontSize: '1.7rem', color: 'white',
+              fontFamily: "'Syne', sans-serif", fontWeight: 200, fontSize: '1.7rem', color: 'white',
               boxShadow: '0 4px 18px rgba(232,64,126,0.32)',
             }}>hb</div>
           </DesktopIcon>
@@ -156,16 +170,7 @@ export default function Home() {
         boxShadow: '0 16px 48px rgba(232,64,126,0.2), 0 4px 16px rgba(200,40,100,0.1), inset 0 1px 0 rgba(255,255,255,0.65)',
       }}>
         {dockLinks.map(({ href, title, bg, svg }) => (
-          <a key={title} href={href} target="_blank" title={title} style={{
-            width: 50, height: 50, borderRadius: 14, background: bg,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            textDecoration: 'none',
-            transition: 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-8px) scale(1.12)')}
-          onMouseLeave={e => (e.currentTarget.style.transform = '')}>
-            {svg}
-          </a>
+          <DockIcon key={title} href={href} title={title} bg={bg}>{svg}</DockIcon>
         ))}
       </div>
 
@@ -175,8 +180,7 @@ export default function Home() {
       <ContactWindow open={open.contact} onClose={() => close('contact')} zIndex={zOrder.contact} onFocus={() => focus('contact')} />
       <ResumeWindow  open={open.resume}  onClose={() => close('resume')}  zIndex={zOrder.resume}  onFocus={() => focus('resume')} />
       <SkillsWindow  open={open.skills}  onClose={() => close('skills')}  zIndex={zOrder.skills}  onFocus={() => focus('skills')} />
-      <NowPlaying />
-      <StickyNote />
+
     </div>
   );
 }

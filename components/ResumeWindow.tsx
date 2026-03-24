@@ -13,7 +13,7 @@ export default function ResumeWindow({ open, onClose, zIndex, onFocus }: Props) 
   return (
     <RetroWindow
       id="resume" open={open} onClose={onClose} zIndex={zIndex} onFocus={onFocus}
-      accent="#d43a6e" title="EXPERIENCE" searchText="LOOKING FOR ATTENTION !!!"
+      accent="#d43a6e" title="EXPERIENCE" searchText="hridiukani.vercel.app/resume"
       url="https://hridiukani.vercel.app/resume" bodyClass="r-body r-body--exp"
       initialPos={{ x: 240, y: 140 }}
     >
