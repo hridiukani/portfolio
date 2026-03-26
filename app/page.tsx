@@ -137,7 +137,7 @@ export default function Home() {
               borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontFamily: "'Syne', sans-serif", fontWeight: 200, fontSize: '1.7rem', color: 'white',
               boxShadow: '0 4px 18px rgba(232,64,126,0.32)',
-            }}>hb</div>
+            }}>HU</div>
           </DesktopIcon>
 
           <DesktopIcon x={iconPos.works.x}   y={iconPos.works.y}   label="works"   onOpen={() => openWindow('works')}>
