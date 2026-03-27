@@ -105,7 +105,7 @@ export default function Home() {
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'var(--bg)', overflow: 'hidden' }}>
       {!booted && <BootScreen onComplete={() => setBooted(true)} />}
-      <MenuBar />
+      <MenuBar onOpen={openWindow} />
 
       {/* Grid background */}
       <div style={{

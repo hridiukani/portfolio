@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function MenuBar() {
+export default function MenuBar({ onOpen }: { onOpen: (w: 'profile' | 'works' | 'contact' | 'resume' | 'skills') => void }) {
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
@@ -47,8 +47,8 @@ export default function MenuBar() {
         </div>
 
         {/* Nav items */}
-        {['portfolio', 'works', 'contact', 'resume'].map(label => (
-          <MenuBarItem key={label} label={label} />
+        {(['portfolio', 'works', 'contact', 'resume'] as const).map(label => (
+          <MenuBarItem key={label} label={label} onClick={() => onOpen(label === 'portfolio' ? 'profile' : label)} />
         ))}
       </div>
 
@@ -81,10 +81,11 @@ export default function MenuBar() {
   );
 }
 
-function MenuBarItem({ label }: { label: string }) {
+function MenuBarItem({ label, onClick }: { label: string; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
     <span
+      onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -95,7 +96,7 @@ function MenuBarItem({ label }: { label: string }) {
         background: hovered ? 'rgba(255,255,255,0.08)' : 'transparent',
         padding: '4px 12px',
         borderRadius: 4,
-        cursor: 'default',
+        cursor: 'pointer',
         transition: 'color 0.15s, background 0.15s',
         height: '100%',
         display: 'flex', alignItems: 'center',
