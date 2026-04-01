@@ -107,7 +107,7 @@ export default function Home() {
       {!booted && <BootScreen onComplete={() => setBooted(true)} />}
       <MenuBar onOpen={openWindow} />
 
-      {/* Grid background */}
+      {/* Grid  background */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: 'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',
