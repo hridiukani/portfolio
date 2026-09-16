@@ -1,186 +1,400 @@
 'use client';
-import { useState, useCallback, useEffect } from 'react';
-import ProfileWindow from '@/components/ProfileWindow';
-import WorksWindow from '@/components/WorksWindow';
-import ContactWindow from '@/components/ContactWindow';
-import ResumeWindow from '@/components/ResumeWindow';
+import {
+  BriefcaseBusiness,
+  Code2,
+  Download,
+  ExternalLink,
+  FileText,
+  Github,
+  Linkedin,
+  Mail,
+  Sparkles,
+  UserRound,
+  X,
+} from 'lucide-react';
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import BootScreen from '@/components/BootScreen';
-import MenuBar from '@/components/MenuBar';
-import DesktopIcon from '@/components/DesktopIcon';
-import SkillsWindow from '@/components/SkillsWindow';
 
-type WindowName = 'profile' | 'works' | 'contact' | 'resume' | 'skills';
+type WindowId = 'about' | 'projects' | 'experience' | 'skills' | 'resume';
+type WindowState = {
+  id: WindowId;
+  position: { left: number; top: number } | null;
+  zIndex: number;
+};
 
-const FolderIcon = () => (
-  <svg width="80" height="68" viewBox="0 0 100 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M 6 14 Q 2 14 2 18 L 2 74 Q 2 80 7 80 L 93 80 Q 98 80 98 75 L 98 26 L 44 26 L 40 14 Z"
-      fill="#f0a0c4" stroke="#c44d82" strokeWidth="2.5" strokeLinejoin="round"/>
-    <rect x="2" y="32" width="96" height="48" rx="5" fill="#fcd8eb" stroke="#c44d82" strokeWidth="2.5"/>
-    <rect x="27" y="42" width="46" height="28" rx="2" fill="#89b4fa" stroke="#5a8be8" strokeWidth="1.5"/>
-  </svg>
-);
+const resumeUrl = '/resume.pdf';
 
-const dockLinks = [
-  { href: 'https://linkedin.com/in/hridiukani1807', title: 'LinkedIn', bg: 'linear-gradient(135deg,#38bdf8,#0077b5)',
-    svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> },
-  { href: 'https://github.com/hridiukani', title: 'GitHub', bg: 'linear-gradient(135deg,#c084fc,#7c3aed)',
-    svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> },
+const desktopItems: Array<{
+  id: WindowId;
+  label: string;
+  file: string;
+  tone: 'sun' | 'rose' | 'olive' | 'paper';
+  icon: typeof UserRound;
+}> = [
+  { id: 'about', label: 'About me', file: 'hello.txt', tone: 'sun', icon: UserRound },
+  { id: 'projects', label: 'Projects', file: '3 items', tone: 'rose', icon: Code2 },
+  { id: 'experience', label: 'Experience', file: 'timeline.log', tone: 'olive', icon: BriefcaseBusiness },
+  { id: 'skills', label: 'Skills', file: 'stack.json', tone: 'paper', icon: Sparkles },
+  { id: 'resume', label: 'Résumé', file: 'hridi.pdf', tone: 'sun', icon: FileText },
 ];
 
+const desktopPositions = [
+  'desktop-position-left-one',
+  'desktop-position-left-two',
+  'desktop-position-left-three',
+  'desktop-position-right-one',
+  'desktop-position-right-two',
+] as const;
 
-function DockIcon({ href, title, bg, children }: { href: string; title: string; bg: string; children: React.ReactNode }) {
-  const [hovered, setHovered] = useState(false);
+const skills = [
+  ['Languages', 'JavaScript, TypeScript, Java, Python, C/C++, SQL, Go'],
+  ['Frontend', 'React, Next.js, Angular, HTML, CSS'],
+  ['Backend', 'Spring Boot, Node.js, Flask, PostgreSQL, MySQL'],
+  ['AI & data', 'RAG, TensorFlow, PyTorch, spaCy, Hugging Face'],
+  ['Tools', 'AWS, Azure, Docker, Git, MongoDB, Jira, Postman'],
+];
+
+const experience = [
+  { role: 'Software Engineering Intern', company: 'Extra Sauce Agency', period: 'Sep 2025 — May 2026' },
+  { role: 'Research Assistant', company: 'ASU Data Mining & Machine Learning Lab', period: 'Jun 2025 — May 2026' },
+  { role: 'Software Engineering Intern', company: 'Hacker in Heels', period: 'Sep 2025 — Nov 2025' },
+];
+
+const projects = [
+  { name: 'Cincin', period: 'Next.js · FastAPI · PostGIS', accent: 'sun' as const, description: 'An autonomous AI pipeline indexing 600+ Phoenix venues, with sub-100ms radius search and live deal detection.' },
+  { name: 'FlowDesk', period: 'Spring Boot · React · PostgreSQL', accent: 'olive' as const, description: 'A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.' },
+  { name: 'SERA', period: 'Hackathon winner · AI/RAG', accent: 'rose' as const, description: 'A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.' },
+];
+
+export default function Home() {
+  //turn to false once designing is done
+  const [booted, setBooted] = useState(true);
+  const [openWindows, setOpenWindows] = useState<WindowState[]>([
+    { id: 'about', position: null, zIndex: 40 },
+  ]);
+  const [time, setTime] = useState('');
+  const canvasRef = useRef<HTMLElement>(null);
+  const dragOffset = useRef({ id: 'about' as WindowId, x: 0, y: 0 });
+  const topZIndex = useRef(40);
+
+  useEffect(() => {
+    const updateTime = () =>
+      setTime(new Intl.DateTimeFormat('en', { hour: 'numeric', minute: '2-digit' }).format(new Date()));
+    updateTime();
+    const timer = window.setInterval(updateTime, 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const openWindow = (id: WindowId) => {
+    topZIndex.current += 1;
+    setOpenWindows((current) => {
+      if (current.some((item) => item.id === id)) {
+        return current.map((item) => item.id === id ? { ...item, zIndex: topZIndex.current } : item);
+      }
+
+      const canvas = canvasRef.current;
+      const offsetIndex = current.length % 4;
+      const position = canvas && window.innerWidth >= 768
+        ? {
+            left: Math.max(115, (canvas.clientWidth - Math.min(canvas.clientWidth * 0.92, 960)) / 2 + offsetIndex * 26),
+            top: Math.max(24, canvas.clientHeight * 0.12 + offsetIndex * 24),
+          }
+        : null;
+      return [...current, { id, position, zIndex: topZIndex.current }];
+    });
+  };
+
+  const bringToFront = (id: WindowId) => {
+    topZIndex.current += 1;
+    setOpenWindows((current) => current.map((item) => item.id === id ? { ...item, zIndex: topZIndex.current } : item));
+  };
+
+  const closeWindow = (id: WindowId) => {
+    setOpenWindows((current) => current.filter((item) => item.id !== id));
+  };
+
+  const beginDrag = (id: WindowId, event: ReactPointerEvent<HTMLElement>) => {
+    if (window.matchMedia('(max-width: 767px)').matches) return;
+    const panel = event.currentTarget.closest<HTMLElement>('.active-window');
+    const canvas = canvasRef.current;
+    if (!panel || !canvas) return;
+    const panelRect = panel.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    dragOffset.current = { id, x: event.clientX - panelRect.left, y: event.clientY - panelRect.top };
+    bringToFront(id);
+    setOpenWindows((current) => current.map((item) => item.id === id
+      ? { ...item, position: { left: panelRect.left - canvasRect.left, top: panelRect.top - canvasRect.top } }
+      : item));
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const dragWindow = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!event.currentTarget.hasPointerCapture(event.pointerId)) return;
+    const panel = event.currentTarget.closest<HTMLElement>('.active-window');
+    const canvas = canvasRef.current;
+    if (!panel || !canvas) return;
+    const canvasRect = canvas.getBoundingClientRect();
+    const left = Math.max(0, Math.min(event.clientX - canvasRect.left - dragOffset.current.x, canvasRect.width - panel.offsetWidth - 10));
+    const top = Math.max(8, Math.min(event.clientY - canvasRect.top - dragOffset.current.y, canvasRect.height - panel.offsetHeight - 10));
+    setOpenWindows((current) => current.map((item) => item.id === dragOffset.current.id
+      ? { ...item, position: { left, top } }
+      : item));
+  };
+
   return (
-    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {hovered && (
-        <div style={{
-          position: 'absolute', bottom: 'calc(100% + 12px)',
-          background: 'rgba(255,255,255,0.92)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          color: '#1a0a14', fontSize: '0.72rem',
-          fontFamily: "'Syne', sans-serif", fontWeight: 500,
-          letterSpacing: '0.04em',
-          padding: '5px 12px', borderRadius: 8, whiteSpace: 'nowrap',
-          pointerEvents: 'none',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08), inset 0 0.5px 0 rgba(255,255,255,0.9)',
-          border: '0.5px solid rgba(0,0,0,0.08)',
-        }}>{title}</div>
-      )}
-      <a href={href} target="_blank" style={{
-        width: 50, height: 50, borderRadius: 14, background: bg,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        textDecoration: 'none',
-        transform: hovered ? 'translateY(-8px) scale(1.12)' : '',
-        transition: 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}>
-        {children}
-      </a>
+    <>
+      {!booted && <BootScreen onComplete={() => setBooted(true)} />}
+
+      <main className="desktop-shell">
+        <header className="system-bar">
+          <div className="flex min-w-0 items-center gap-2">
+            <span className="status-dot bg-ink" />
+            <span className="status-dot bg-rose" />
+            <span className="status-dot bg-olive" />
+            <span className="ml-2 truncate font-display text-sm font-bold sm:ml-4">
+              HRIDI UKANI
+            </span>
+          </div>
+          <div className="flex shrink-0 items-center gap-3 text-xs font-semibold sm:gap-4">
+            <span className="hidden text-olive sm:inline">portfolio · workspace</span>
+            <span suppressHydrationWarning>{time || '9:41 AM'}</span>
+          </div>
+        </header>
+
+        <section ref={canvasRef} className="desktop-canvas" aria-label="Hridi's portfolio desktop">
+          <div className="desktop-shortcuts" aria-label="Portfolio folders">
+            {desktopItems.map((item, index) => (
+              <DesktopIcon key={item.id} {...item} index={index} onOpen={() => openWindow(item.id)} />
+            ))}
+          </div>
+
+          {openWindows.map((openWindowItem) => (
+            <div
+              key={openWindowItem.id}
+              className={`active-window ${openWindowItem.position ? 'active-window-moved' : ''}`}
+              style={{ ...openWindowItem.position, zIndex: openWindowItem.zIndex }}
+              role="dialog"
+              aria-label={`${openWindowItem.id} window`}
+              onPointerDown={() => bringToFront(openWindowItem.id)}
+            >
+              <WindowChrome
+                title={desktopItems.find((item) => item.id === openWindowItem.id)?.label ?? 'Portfolio'}
+                tone={openWindowItem.id === 'experience' ? 'olive' : openWindowItem.id === 'projects' ? 'rose' : 'sun'}
+                onClose={() => closeWindow(openWindowItem.id)}
+                onDragStart={(event) => beginDrag(openWindowItem.id, event)}
+                onDrag={dragWindow}
+              >
+                <WindowContent id={openWindowItem.id} onOpen={openWindow} />
+              </WindowChrome>
+            </div>
+          ))}
+
+          {openWindows.length === 0 ? (
+            <button className="welcome-note" onClick={() => openWindow('about')} type="button">
+              <span className="font-display text-lg font-bold">Hi, I’m Hridi.</span>
+              <span className="text-sm">Open a folder to explore my work.</span>
+            </button>
+          ) : null}
+
+        </section>
+
+        <nav className="contact-dock" aria-label="Contact Hridi">
+          <div className="contact-dock-inner">
+            <SocialLink href="https://github.com/hridiukani" label="GitHub" icon={<Github />} />
+            <SocialLink href="https://linkedin.com/in/hridiukani1807" label="LinkedIn" icon={<Linkedin />} />
+            <SocialLink href="mailto:hridi.ukani@gmail.com" label="Email" icon={<Mail />} />
+          </div>
+        </nav>
+      </main>
+    </>
+  );
+}
+
+function DesktopIcon({
+  label,
+  file,
+  tone,
+  index,
+  onOpen,
+}: {
+  label: string;
+  file: string;
+  tone: 'sun' | 'rose' | 'olive' | 'paper';
+  icon: typeof UserRound;
+  index: number;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={`desktop-icon ${desktopPositions[index] ?? 'desktop-position-top-left'}`}
+      onClick={onOpen}
+      aria-label={`Open ${label}`}
+    >
+      <span className={`folder-tile folder-${tone}`}>
+        <span className="folder-back" />
+        <span className="folder-front" />
+      </span>
+      <span className="mt-2 font-display text-xs font-bold">{label}</span>
+      <span className="text-[10px] text-muted-foreground">{file}</span>
+    </button>
+  );
+}
+
+function WindowChrome({
+  title,
+  tone,
+  compact = false,
+  onClose,
+  onDragStart,
+  onDrag,
+  children,
+}: {
+  title: string;
+  tone: 'sun' | 'rose' | 'olive';
+  compact?: boolean;
+  onClose?: () => void;
+  onDragStart?: (event: ReactPointerEvent<HTMLElement>) => void;
+  onDrag?: (event: ReactPointerEvent<HTMLElement>) => void;
+  children: ReactNode;
+}) {
+  return (
+    <article className={`window-panel ${compact ? 'window-panel-compact' : ''}`}>
+      <header
+        className={`window-titlebar titlebar-${tone} ${onDragStart ? 'window-titlebar-draggable' : ''}`}
+        onPointerDown={onDragStart}
+        onPointerMove={onDrag}
+      >
+        <span className="truncate font-display text-sm font-bold">{title}</span>
+        <div className="flex shrink-0 items-center gap-1.5">
+          <span className="window-control bg-paper" />
+          <span className="window-control bg-sun" />
+          {onClose ? (
+            <button className="window-close" type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onClose} aria-label={`Close ${title}`}>
+              <X className="size-3" strokeWidth={3} />
+            </button>
+          ) : (
+            <span className="window-control bg-rose" />
+          )}
+        </div>
+      </header>
+      <div className="window-body">{children}</div>
+    </article>
+  );
+}
+
+function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) => void }) {
+  if (id === 'about') {
+    return (
+      <div className="p-6 sm:p-7">
+        <div>
+          <div className="min-w-0">
+            <p className="text-[11px] font-bold uppercase text-olive">Hi, I’m</p>
+            <h1 className="text-2xl font-extrabold leading-tight sm:text-3xl">Hridi Ukani</h1>
+            <p className="mt-1 text-sm font-semibold text-rose">Software Engineer · ASU ’26</p>
+          </div>
+        </div>
+        <p className="mt-3 text-xs leading-relaxed sm:text-sm">
+          I build dependable, human-centered software—from full-stack products to AI and RAG pipelines. I’m happiest turning a hard problem into something clear, fast, and useful.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <MiniTag>Full-stack</MiniTag><MiniTag>AI / RAG</MiniTag><MiniTag>Research</MiniTag><MiniTag>Team lead</MiniTag>
+        </div>
+        <button className="window-action mt-5" type="button" onClick={() => onOpen('projects')}>
+          Explore my projects <ExternalLink className="size-4" />
+        </button>
+      </div>
+    );
+  }
+
+  if (id === 'projects') {
+    return (
+      <div className="grid gap-3 p-6 sm:grid-cols-3 sm:p-7">
+        {projects.map((project) => (
+          <ProjectCard key={project.name} {...project} />
+        ))}
+      </div>
+    );
+  }
+
+  if (id === 'experience') {
+    return (
+      <div className="space-y-4 p-6 sm:p-7">
+        {experience.map((job) => (
+          <ExperienceItem key={job.role + job.company} {...job} />
+        ))}
+      </div>
+    );
+  }
+
+  if (id === 'skills') {
+    return (
+      <div className="grid gap-3 p-6 sm:grid-cols-2 sm:p-7">
+        {skills.map(([group, items]) => (
+          <div key={group} className="skill-block">
+            <p className="font-display text-xs font-bold text-olive">{group}</p>
+            <p className="mt-1 text-xs leading-relaxed">{items}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6 text-center sm:p-8">
+      <div className="mx-auto grid size-20 place-items-center border-2 border-ink bg-sun shadow-button">
+        <FileText className="size-9" />
+      </div>
+      <h2 className="mt-4 font-display text-xl font-extrabold">HridiUkani_SWEResume.pdf</h2>
+      <p className="mx-auto mt-2 max-w-sm text-xs text-muted-foreground sm:text-sm">
+        Education, engineering experience, technical skills, and selected projects—ready to view or download.
+      </p>
+      <div className="mt-5 flex flex-wrap justify-center gap-3">
+        <a className="window-action" href={resumeUrl} target="_blank" rel="noreferrer">
+          Open résumé <ExternalLink className="size-4" />
+        </a>
+        <a className="window-action-secondary" href={resumeUrl} download="HridiUkani_SWEResume.pdf">
+          Download <Download className="size-4" />
+        </a>
+      </div>
     </div>
   );
 }
 
-export default function Home() {
-  const [booted, setBooted] = useState(false);
-  const [iconPos, setIconPos] = useState<Record<WindowName, { x: number; y: number }> | null>(null);
+function MiniTag({ children }: { children: ReactNode }) {
+  return <span className="mini-tag">{children}</span>;
+}
 
-  useEffect(() => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    const mb = 46;
-    setIconPos({
-      profile: { x: Math.round(w * 0.08),        y: mb + Math.round(h * 0.07) },
-      works:   { x: Math.round(w * 0.08),        y: Math.round(h * 0.38) },
-      skills:  { x: Math.round(w * 0.08),        y: Math.round(h * 0.65) },
-      contact: { x: Math.round(w * 0.92 - 90),   y: mb + Math.round(h * 0.07) },
-      resume:  { x: Math.round(w * 0.92 - 90),   y: Math.round(h * 0.42) },
-    });
-  }, []);
-
-  const [open, setOpen] = useState<Record<WindowName, boolean>>({
-    profile: false, works: false, contact: false, resume: false, skills: false,
-  });
-  const [zOrder, setZOrder] = useState<Record<WindowName, number>>({
-    profile: 100, works: 101, contact: 102, resume: 103, skills: 104,
-  });
-  const [topZ, setTopZ] = useState(105);
-
-  const openWindow = (name: WindowName) => {
-    setOpen(o => ({ ...o, [name]: true }));
-    focus(name);
-  };
-
-  const focus = useCallback((name: WindowName) => {
-    setTopZ(z => {
-      const next = z + 1;
-      setZOrder(o => ({ ...o, [name]: next }));
-      return next;
-    });
-  }, []);
-
-  const close = (name: WindowName) => setOpen(o => ({ ...o, [name]: false }));
-
+function ProjectCard({ name, period, accent, description }: { name: string; period: string; accent: string; description: string }) {
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'var(--bg)', overflow: 'hidden' }}>
-      {!booted && <BootScreen onComplete={() => setBooted(true)} />}
-      <MenuBar onOpen={openWindow} />
-
-      {/* Grid  background */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        backgroundImage: 'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',
-        backgroundSize: '36px 36px',
-      }} />
-
-      {/* Big title */}
-      <h1 style={{
-        position: 'absolute', top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        fontFamily: "'Syne', sans-serif", fontStyle: 'normal', fontWeight: 300,
-        fontSize: 'clamp(3rem, 10vw, 8rem)', letterSpacing: '0.12em',
-        color: 'var(--text-title)', opacity: 0.15, whiteSpace: 'nowrap',
-        pointerEvents: 'none', userSelect: 'none',
-      }}>
-        Hridi Ukani
-      </h1>
-
-
-      {/* Desktop icons — rendered only after positions are computed client-side */}
-      {iconPos && (
-        <>
-          <DesktopIcon x={iconPos.profile.x} y={iconPos.profile.y} label="profile" onOpen={() => openWindow('profile')}>
-            <div style={{
-              width: 72, height: 72,
-              background: 'linear-gradient(135deg, #e8407e 0%, #c8a0e0 100%)',
-              borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: "'Syne', sans-serif", fontWeight: 200, fontSize: '1.7rem', color: 'white',
-              boxShadow: '0 4px 18px rgba(232,64,126,0.32)',
-            }}>HU</div>
-          </DesktopIcon>
-
-          <DesktopIcon x={iconPos.works.x}   y={iconPos.works.y}   label="works"   onOpen={() => openWindow('works')}>
-            <FolderIcon />
-          </DesktopIcon>
-
-          <DesktopIcon x={iconPos.skills.x}   y={iconPos.skills.y}   label="skills"   onOpen={() => openWindow('skills')}>
-            <FolderIcon />
-          </DesktopIcon>
-
-          <DesktopIcon x={iconPos.contact.x} y={iconPos.contact.y} label="contact" onOpen={() => openWindow('contact')}>
-            <FolderIcon />
-          </DesktopIcon>
-
-          <DesktopIcon x={iconPos.resume.x}  y={iconPos.resume.y}  label="resume"  onOpen={() => openWindow('resume')}>
-            <FolderIcon />
-          </DesktopIcon>
-        </>
-      )}
-
-      {/* Floating dock */}
-      <div style={{
-        position: 'absolute', bottom: 28, left: '50%', transform: 'translateX(-50%)',
-        background: 'rgba(255,228,242,0.38)',
-        backdropFilter: 'blur(28px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(28px) saturate(180%)',
-        border: '1px solid rgba(255,190,220,0.55)',
-        borderRadius: 28, padding: '14px 24px',
-        display: 'flex', alignItems: 'center', gap: 14,
-        boxShadow: '0 16px 48px rgba(232,64,126,0.2), 0 4px 16px rgba(200,40,100,0.1), inset 0 1px 0 rgba(255,255,255,0.65)',
-      }}>
-        {dockLinks.map(({ href, title, bg, svg }) => (
-          <DockIcon key={title} href={href} title={title} bg={bg}>{svg}</DockIcon>
-        ))}
+    <article className={`project-card project-card-${accent}`}>
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-display text-base font-extrabold leading-tight">{name}</h2>
+        <Code2 className="size-4 shrink-0" />
       </div>
+      <p className="mt-1 text-[10px] font-bold uppercase text-muted-foreground">{period}</p>
+      <p className="mt-3 text-xs leading-relaxed">{description}</p>
+    </article>
+  );
+}
 
-      {/* Windows */}
-      <ProfileWindow open={open.profile} onClose={() => close('profile')} zIndex={zOrder.profile} onFocus={() => focus('profile')} />
-      <WorksWindow   open={open.works}   onClose={() => close('works')}   zIndex={zOrder.works}   onFocus={() => focus('works')} />
-      <ContactWindow open={open.contact} onClose={() => close('contact')} zIndex={zOrder.contact} onFocus={() => focus('contact')} />
-      <ResumeWindow  open={open.resume}  onClose={() => close('resume')}  zIndex={zOrder.resume}  onFocus={() => focus('resume')} />
-      <SkillsWindow  open={open.skills}  onClose={() => close('skills')}  zIndex={zOrder.skills}  onFocus={() => focus('skills')} />
+function ExperienceItem({ period, role, company }: { period: string; role: string; company: string }) {
+  return (
+    <article className="grid gap-2 border-b border-ink/15 pb-4 last:border-b-0 last:pb-0 sm:grid-cols-[150px_minmax(0,1fr)]">
+      <p className="text-[10px] font-bold uppercase text-olive">{period}</p>
+      <div>
+        <h2 className="font-display text-sm font-extrabold">{role}</h2>
+        <p className="text-xs font-bold text-rose">{company}</p>
+      </div>
+    </article>
+  );
+}
 
-    </div>
+function SocialLink({ href, label, icon }: { href: string; label: string; icon: ReactNode }) {
+  return (
+    <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined} className="social-link" aria-label={label} title={label}>
+      <span className="size-4">{icon}</span>
+      <span className="hidden sm:inline">{label}</span>
+    </a>
   );
 }
