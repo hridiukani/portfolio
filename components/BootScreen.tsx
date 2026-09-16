@@ -9,7 +9,7 @@ const MESSAGES = [
   { text: 'HRIDI.OS  v2026.1',          style: 'header'  },
   { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', style: 'divider' },
   { text: '[ OK ]  loading system fonts...'               },
-  { text: '[ OK ]  mounting aesthetic modules...'         },
+  { text: '[ OK ]  mounting modules...'         },
   { text: '[ OK ]  initializing pink protocol...'         },
   { text: '[ OK ]  compiling sparkle engine  v3.97...'   },
   { text: '[ OK ]  verifying gpa: 3.9  ✓'               },

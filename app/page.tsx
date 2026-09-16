@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import BootScreen from "@/components/BootScreen";
 
 const resumeUrl = "/resume.pdf";
 
@@ -61,6 +62,7 @@ const projects: Array<{ name: string; meta: string; accent: "sun" | "olive" | "r
 ];
 
 export default function Portfolio() {
+  const [booted, setBooted] = useState(false);
   const [openWindows, setOpenWindows] = useState<WindowState[]>([
     { id: "about", position: null, zIndex: 40 },
   ]);
@@ -134,7 +136,10 @@ export default function Portfolio() {
   };
 
   return (
-    <main className="desktop-shell">
+    <>
+      {!booted && <BootScreen onComplete={() => setBooted(true)} />}
+
+      <main className="desktop-shell">
       <header className="system-bar">
         <div className="flex min-w-0 items-center gap-2">
           <span className="status-dot bg-ink" />
@@ -194,7 +199,8 @@ export default function Portfolio() {
           <SocialLink href="mailto:hridi.ukani@gmail.com" label="Email" icon={<Mail />} />
         </div>
       </nav>
-    </main>
+      </main>
+    </>
   );
 }
 
