@@ -12,7 +12,7 @@ const MESSAGES = [
   { text: '[ OK ]  mounting aesthetic modules...'         },
   { text: '[ OK ]  initializing pink protocol...'         },
   { text: '[ OK ]  compiling sparkle engine  v3.97...'   },
-  { text: '[ OK ]  verifying gpa: 3.97  ✓'               },
+  { text: '[ OK ]  verifying gpa: 3.9  ✓'               },
   { text: '[ OK ]  connecting to arizona state univ...'  },
   { text: '[ OK ]  loading portfolio database...'         },
   { text: '[ OK ]  connecting to hridiukani.vercel.app...' },
