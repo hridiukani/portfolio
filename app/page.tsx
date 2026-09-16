@@ -1,6 +1,8 @@
 'use client';
 import {
   BriefcaseBusiness,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Download,
   ExternalLink,
@@ -31,7 +33,7 @@ const desktopItems: Array<{
   icon: typeof UserRound;
 }> = [
   { id: "about", label: "About me", file: "hello.txt", tone: "sun", icon: UserRound },
-  { id: "projects", label: "Projects", file: "3 items", tone: "rose", icon: Code2 },
+  { id: "projects", label: "Projects", file: "4 items", tone: "rose", icon: Code2 },
   { id: "experience", label: "Experience", file: "timeline.log", tone: "olive", icon: BriefcaseBusiness },
   { id: "skills", label: "Skills", file: "stack.json", tone: "paper", icon: Sparkles },
   { id: "resume", label: "Résumé", file: "hridi.pdf", tone: "sun", icon: FileText },
@@ -51,6 +53,15 @@ const skills = [
   ["Backend", "Spring Boot, Node.js, Flask, PostgreSQL, MySQL"],
   ["AI & data", "RAG, TensorFlow, PyTorch, spaCy, Hugging Face"],
   ["Tools", "AWS, Azure, Docker, Git, MongoDB, Jira, Postman"],
+];
+
+const placeholderProjectLink = "https://github.com/hridiukani";
+
+const projects: Array<{ name: string; meta: string; accent: "sun" | "olive" | "rose"; description: string; link: string }> = [
+  { name: "Cincin", meta: "Next.js · FastAPI · PostGIS", accent: "sun", description: "An autonomous AI pipeline indexing 600+ Phoenix venues for Happy Hour deals.", link: placeholderProjectLink },
+  { name: "FlowDesk", meta: "Spring Boot · React · PostgreSQL", accent: "olive", description: "A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.", link: placeholderProjectLink },
+  { name: "SERA", meta: "Hackathon winner · AI/RAG", accent: "rose", description: "A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.", link: placeholderProjectLink },
+  { name: "SignSpeak", meta: "Python · OpenCV", accent: "rose", description: "A real-time ASL to English translator with over 90% accuracy on test set.", link: placeholderProjectLink },
 ];
 
 export default function Portfolio() {
@@ -271,7 +282,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
         <div>
           <div className="min-w-0">
             <p className="text-xs font-bold uppercase text-olive">Hi, I’m</p>
-            <h1 className="text-3xl font-extrabold leading-none sm:text-4xl">Hridi Ukani</h1>
+            <h1 className="font-display text-3xl font-extrabold leading-none sm:text-4xl">Hridi Ukani</h1>
             <p className="mt-1 font-semibold text-rose">Software Engineer · ASU ’26</p>
           </div>
         </div>
@@ -289,22 +300,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
   }
 
   if (id === "projects") {
-    return (
-      <div className="grid gap-3 p-4 sm:grid-cols-3">
-        <ProjectCard name="Cincin" meta="Next.js · FastAPI · PostGIS" accent="sun">
-          An autonomous AI pipeline indexing 600+ Phoenix venues for Happy Hour deals.
-        </ProjectCard>
-        <ProjectCard name="FlowDesk" meta="Spring Boot · React · PostgreSQL" accent="olive">
-          A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.
-        </ProjectCard>
-        <ProjectCard name="SERA" meta="Hackathon winner · AI/RAG" accent="rose">
-          A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.
-        </ProjectCard>
-        <ProjectCard name="SignSpeak" meta="Python · OpenCV" accent="rose">
-          A real-time ASL to English translator with over 90% accuracy on test set.
-          </ProjectCard>
-      </div>
-    );
+    return <ProjectsCarousel />;
   }
 
   if (id === "experience") {
@@ -341,7 +337,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
       <div className="mx-auto grid size-20 place-items-center border-2 border-ink bg-sun shadow-button">
         <FileText className="size-9" />
       </div>
-      <h2 className="mt-4 font-display text-2xl font-extrabold">HridiUkani_SWEResume.pdf</h2>
+      <h2 className="mt-4 font-display text-2xl font-extrabold">HridiUkani_Resume</h2>
       <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
         Education, engineering experience, technical skills, and selected projects — ready to view or download.
       </p>
@@ -361,7 +357,42 @@ function MiniTag({ children }: { children: ReactNode }) {
   return <span className="mini-tag">{children}</span>;
 }
 
-function ProjectCard({ name, meta, accent, children }: { name: string; meta: string; accent: string; children: ReactNode }) {
+function ProjectsCarousel() {
+  const pageSize = 3;
+  const pageCount = Math.ceil(projects.length / pageSize);
+  const [page, setPage] = useState(0);
+  const visible = projects.slice(page * pageSize, page * pageSize + pageSize);
+
+  return (
+    <div className="flex items-center gap-2 p-4 sm:p-5">
+      <button
+        type="button"
+        className="carousel-arrow"
+        onClick={() => setPage((p) => Math.max(0, p - 1))}
+        disabled={page === 0}
+        aria-label="Previous projects"
+      >
+        <ChevronLeft className="size-4" />
+      </button>
+      <div className="grid flex-1 gap-3 sm:grid-cols-3">
+        {visible.map((project) => (
+          <ProjectCard key={project.name} {...project} />
+        ))}
+      </div>
+      <button
+        type="button"
+        className="carousel-arrow"
+        onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+        disabled={page === pageCount - 1}
+        aria-label="Next projects"
+      >
+        <ChevronRight className="size-4" />
+      </button>
+    </div>
+  );
+}
+
+function ProjectCard({ name, meta, accent, description, link }: { name: string; meta: string; accent: string; description: string; link: string }) {
   return (
     <article className={`project-card project-card-${accent}`}>
       <div className="flex items-center justify-between gap-2">
@@ -369,19 +400,22 @@ function ProjectCard({ name, meta, accent, children }: { name: string; meta: str
         <Code2 className="size-5 shrink-0" />
       </div>
       <p className="mt-1 text-[10px] font-bold uppercase text-muted-foreground">{meta}</p>
-      <p className="mt-3 text-xs leading-relaxed sm:text-sm">{children}</p>
+      <p className="mt-3 text-xs leading-relaxed sm:text-sm">{description}</p>
+      <a className="window-action-secondary mt-3" href={link} target="_blank" rel="noreferrer">
+        Explore project <ExternalLink className="size-4" />
+      </a>
     </article>
   );
 }
 
-function ExperienceItem({ period, role, company, children }: { period: string; role: string; company: string; children: ReactNode }) {
+function ExperienceItem({ period, role, company, children }: { period: string; role: string; company: string; children?: ReactNode }) {
   return (
     <article className="grid gap-2 border-b border-ink/15 pb-4 last:border-b-0 last:pb-0 sm:grid-cols-[128px_minmax(0,1fr)]">
       <p className="text-[11px] font-bold uppercase text-olive">{period}</p>
       <div>
         <h2 className="font-display text-base font-extrabold">{role}</h2>
         <p className="text-xs font-bold text-rose">{company}</p>
-        <p className="mt-1 text-xs leading-relaxed sm:text-sm">{children}</p>
+        {children ? <p className="mt-1 text-xs leading-relaxed sm:text-sm">{children}</p> : null}
       </div>
     </article>
   );
