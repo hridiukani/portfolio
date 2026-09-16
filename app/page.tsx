@@ -276,7 +276,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
           </div>
         </div>
         <p className="mt-4 text-sm leading-relaxed">
-          I build dependable, human-centered software—from full-stack products to AI and RAG pipelines. I’m happiest turning a hard problem into something clear, fast, and useful.
+          I build dependable, human-centered software — from full-stack products to AI and RAG pipelines. I’m happiest turning a hard problem into something clear, fast, and useful.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <MiniTag>Full-stack</MiniTag><MiniTag>AI / RAG</MiniTag><MiniTag>Research</MiniTag><MiniTag>Team lead</MiniTag>
@@ -292,7 +292,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
     return (
       <div className="grid gap-3 p-4 sm:grid-cols-3">
         <ProjectCard name="Cincin" meta="Next.js · FastAPI · PostGIS" accent="sun">
-          An autonomous AI pipeline indexing 600+ Phoenix venues, with sub-100ms radius search and live deal detection.
+          An autonomous AI pipeline indexing 600+ Phoenix venues for Happy Hour deals.
         </ProjectCard>
         <ProjectCard name="FlowDesk" meta="Spring Boot · React · PostgreSQL" accent="olive">
           A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.
@@ -300,6 +300,9 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
         <ProjectCard name="SERA" meta="Hackathon winner · AI/RAG" accent="rose">
           A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.
         </ProjectCard>
+        <ProjectCard name="SignSpeak" meta="Python · OpenCV" accent="rose">
+          A real-time ASL to English translator with over 90% accuracy on test set.
+          </ProjectCard>
       </div>
     );
   }
@@ -307,14 +310,14 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
   if (id === "experience") {
     return (
       <div className="space-y-4 p-4 sm:p-5">
-        <ExperienceItem period="Sep 2025 — May 2026" role="Software Engineering Intern" company="Extra Sauce Agency">
-          Led five engineers building a content platform and AI agent workflows that cut creation time by 60% for 50+ users.
-        </ExperienceItem>
+        <ExperienceItem period="Sep 2025 — May 2026" role="Software Engineering Intern" company="Extra Sauce Agency">        </ExperienceItem>
         <ExperienceItem period="Jun 2025 — May 2026" role="Research Assistant" company="ASU Data Mining & Machine Learning Lab">
-          Ran 15+ LLM feature-selection experiments and improved model accuracy by up to 12%.
         </ExperienceItem>
         <ExperienceItem period="Sep 2025 — Nov 2025" role="Software Engineering Intern" company="Hacker in Heels">
-          Built an NLP analysis app for 1,000+ survey responses and improved opportunity matching by 35%.
+        </ExperienceItem>
+        <ExperienceItem period="Sep 2023 — May 2026" role="Technology Assistant" company="Sun Devil Athletics">
+        </ExperienceItem>
+        <ExperienceItem period="Aug 2024 — Dec 2024" role="Teaching Assistant" company="Fulton School of Engineering">
         </ExperienceItem>
       </div>
     );
@@ -340,7 +343,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
       </div>
       <h2 className="mt-4 font-display text-2xl font-extrabold">HridiUkani_SWEResume.pdf</h2>
       <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
-        Education, engineering experience, technical skills, and selected projects—ready to view or download.
+        Education, engineering experience, technical skills, and selected projects — ready to view or download.
       </p>
       <div className="mt-5 flex flex-wrap justify-center gap-3">
         <a className="window-action" href={resumeUrl} target="_blank" rel="noreferrer">
@@ -387,7 +390,7 @@ function ExperienceItem({ period, role, company, children }: { period: string; r
 function SocialLink({ href, label, icon }: { href: string; label: string; icon: ReactNode }) {
   return (
     <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="social-link" aria-label={label} title={label}>
-      <span className="size-4">{icon}</span>
+      <span className="inline-flex size-4 shrink-0 items-center justify-center [&>svg]:size-4">{icon}</span>
       <span className="hidden sm:inline">{label}</span>
     </a>
   );
