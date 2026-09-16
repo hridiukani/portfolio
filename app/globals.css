@@ -81,7 +81,7 @@ button, a { letter-spacing: 0; }
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1rem;
+  gap: 4rem;
   min-height: 42px;
   padding: 0.5rem 1rem;
   border-bottom: 2px solid color-mix(in oklab, var(--ink) 14%, transparent);
@@ -100,7 +100,7 @@ button, a { letter-spacing: 0; }
 
 @utility desktop-icon {
   position: absolute;
-  width: 84px;
+  width: 104px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,16 +112,16 @@ button, a { letter-spacing: 0; }
   &:active .folder-tile { transform: translate(2px, 2px); }
 }
 
-@utility desktop-position-left-one { left: 2rem; top: 2.5rem; }
-@utility desktop-position-left-two { left: 2rem; top: 9rem; animation-delay: 80ms; }
-@utility desktop-position-left-three { left: 2rem; top: 15.5rem; animation-delay: 140ms; }
+@utility desktop-position-left-one { left: 2rem; top: 2rem; }
+@utility desktop-position-left-two { left: 2rem; top: 11rem; animation-delay: 80ms; }
+@utility desktop-position-left-three { left: 2rem; top: 20rem; animation-delay: 140ms; }
 @utility desktop-position-right-one { right: 2rem; top: 6rem; animation-delay: 200ms; }
-@utility desktop-position-right-two { right: 2rem; top: 12.5rem; animation-delay: 260ms; }
+@utility desktop-position-right-two { right: 2rem; top: 15rem; animation-delay: 260ms; }
 
 @utility folder-tile {
   position: relative;
-  width: 54px;
-  height: 42px;
+  width: 74px;
+  height: 58px;
   transition: transform .12s ease, box-shadow .12s ease;
 }
 
@@ -138,7 +138,7 @@ button, a { letter-spacing: 0; }
   left: 2px;
   right: 2px;
   bottom: 2px;
-  height: 28px;
+  height: 38px;
   border: 2px solid var(--ink);
   border-radius: 2px 2px 4px 4px;
   background: color-mix(in oklab, var(--sun) 78%, var(--paper));
@@ -156,7 +156,7 @@ button, a { letter-spacing: 0; }
   left: 50%;
   top: 48%;
   z-index: 40;
-  width: min(92vw, 960px);
+  width: min(92vw, 720px);
   transform: translate(-50%, -50%);
   animation: window-pop .32s cubic-bezier(.34, 1.56, .64, 1) both;
 }
@@ -171,7 +171,7 @@ button, a { letter-spacing: 0; }
 @utility titlebar-olive { background: var(--olive); color: var(--paper); }
 @utility window-control { display: block; width: .72rem; height: .72rem; border: 1px solid var(--ink); border-radius: 999px; }
 @utility window-close { display: grid; width: 1.15rem; height: 1.15rem; place-items: center; border: 1px solid var(--ink); border-radius: 2px; background: var(--rose); color: var(--ink); cursor: pointer; }
-@utility window-body { max-height: min(68dvh, 600px); overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; }
+@utility window-body { max-height: min(100dvh, 800px); overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; }
 
 @utility desktop-only-window { position: absolute; z-index: 10; width: min(25vw, 310px); }
 @utility left-preview { left: 8rem; top: 3rem; transform: rotate(-1deg); }
@@ -186,11 +186,11 @@ button, a { letter-spacing: 0; }
 @utility project-card-rose { background: color-mix(in oklab, var(--rose) 28%, var(--paper)); }
 @utility project-card-olive { background: color-mix(in oklab, var(--olive) 20%, var(--paper)); }
 
-@utility social-link { display: flex; height: 34px; align-items: center; gap: .4rem; border: 2px solid var(--ink); border-radius: 3px; background: var(--paper); color: var(--ink); padding: 0 .65rem; font-size: .72rem; font-weight: 800; box-shadow: 2px 2px 0 var(--ink); }
+@utility social-link { display: flex; height: 46px; align-items: center; gap: .55rem; border: 2px solid var(--ink); border-radius: 4px; background: var(--paper); color: var(--ink); padding: 0 1rem; font-size: .9rem; font-weight: 800; box-shadow: 3px 3px 0 var(--ink); }
 @utility welcome-note { position: absolute; left: 50%; top: 46%; display: flex; transform: translate(-50%, -50%) rotate(-1deg); flex-direction: column; border: 2px solid var(--ink); background: var(--sun); padding: 1.25rem 1.5rem; box-shadow: var(--shadow-window); cursor: pointer; }
 
-@utility contact-dock { position: fixed; right: 0; bottom: 0; left: 0; z-index: 100; display: flex; justify-content: center; pointer-events: none; }
-@utility contact-dock-inner { display: flex; align-items: center; gap: .55rem; border: 2px solid var(--ink); border-bottom: 0; border-radius: 5px 5px 0 0; background: var(--olive); padding: .55rem .7rem .65rem; box-shadow: 5px 0 0 var(--ink); pointer-events: auto; }
+@utility contact-dock { position: fixed; right: 0; bottom: 0; left: 0; z-index: 80; display: flex; justify-content: center; pointer-events: none; }
+@utility contact-dock-inner { display: flex; align-items: center; gap: .8rem; border: 2px solid var(--ink); border-bottom: 0; border-radius: 10px 10px 0 0; background: var(--olive); padding: 1.5rem 2rem 1.75rem; box-shadow: 4px 0 0 var(--ink); pointer-events: auto; }
 
 @media (max-width: 767px) {
   html, body { overflow: auto; }

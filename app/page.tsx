@@ -58,11 +58,15 @@ const experience = [
   { role: 'Software Engineering Intern', company: 'Extra Sauce Agency', period: 'Sep 2025 — May 2026' },
   { role: 'Research Assistant', company: 'ASU Data Mining & Machine Learning Lab', period: 'Jun 2025 — May 2026' },
   { role: 'Software Engineering Intern', company: 'Hacker in Heels', period: 'Sep 2025 — Nov 2025' },
+  { role: 'Software Engineering Intern', company: 'Hacker in Heels', period: 'Sep 2025 — Nov 2025' },
+  { role: 'Software Engineering Intern', company: 'Hacker in Heels', period: 'Sep 2025 — Nov 2025' }
 ];
 
 const projects = [
   { name: 'Cincin', period: 'Next.js · FastAPI · PostGIS', accent: 'sun' as const, description: 'An autonomous AI pipeline indexing 600+ Phoenix venues, with sub-100ms radius search and live deal detection.' },
   { name: 'FlowDesk', period: 'Spring Boot · React · PostgreSQL', accent: 'olive' as const, description: 'A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.' },
+  { name: 'SERA', period: 'Hackathon winner · AI/RAG', accent: 'rose' as const, description: 'A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.' },
+  { name: 'SERA', period: 'Hackathon winner · AI/RAG', accent: 'rose' as const, description: 'A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.' },
   { name: 'SERA', period: 'Hackathon winner · AI/RAG', accent: 'rose' as const, description: 'A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.' },
 ];
 
@@ -393,7 +397,7 @@ function ExperienceItem({ period, role, company }: { period: string; role: strin
 function SocialLink({ href, label, icon }: { href: string; label: string; icon: ReactNode }) {
   return (
     <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined} className="social-link" aria-label={label} title={label}>
-      <span className="size-4">{icon}</span>
+      <span className="size-5">{icon}</span>
       <span className="hidden sm:inline">{label}</span>
     </a>
   );
