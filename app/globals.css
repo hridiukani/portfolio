@@ -303,6 +303,7 @@
 @utility mini-tag { border: 1px solid color-mix(in oklab, var(--ink) 25%, transparent); border-radius: 4px; background: color-mix(in oklab, var(--rose) 24%, transparent); padding: .2rem .55rem; font-size: .7rem; font-weight: 700; }
 @utility window-action { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border: 2px solid var(--ink); border-radius: 4px; background: var(--olive); color: var(--paper); padding: .55rem .85rem; font-size: .75rem; font-weight: 800; box-shadow: var(--shadow-button); cursor: pointer; }
 @utility window-action-secondary { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border: 2px solid var(--ink); border-radius: 4px; background: var(--paper); color: var(--ink); padding: .55rem .85rem; font-size: .75rem; font-weight: 800; box-shadow: var(--shadow-button); }
+@utility window-action-rose { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border: 2px solid var(--ink); border-radius: 4px; background: var(--rose); color: var(--ink); padding: .55rem .85rem; font-size: .75rem; font-weight: 800; box-shadow: var(--shadow-button); cursor: pointer; }
 @utility skill-block { border-left: 3px solid var(--rose); background: color-mix(in oklab, var(--olive) 11%, transparent); padding: .7rem .8rem; }
 @utility project-card { min-height: 188px; border: 2px solid var(--ink); padding: .85rem; }
 @utility project-card-sun { background: color-mix(in oklab, var(--sun) 34%, var(--paper)); }

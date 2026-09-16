@@ -1,8 +1,6 @@
 'use client';
 import {
   BriefcaseBusiness,
-  ChevronLeft,
-  ChevronRight,
   Code2,
   Download,
   ExternalLink,
@@ -33,7 +31,7 @@ const desktopItems: Array<{
   icon: typeof UserRound;
 }> = [
   { id: "about", label: "About me", file: "hello.txt", tone: "sun", icon: UserRound },
-  { id: "projects", label: "Projects", file: "4 items", tone: "rose", icon: Code2 },
+  { id: "projects", label: "Projects", file: "3 items", tone: "rose", icon: Code2 },
   { id: "experience", label: "Experience", file: "timeline.log", tone: "olive", icon: BriefcaseBusiness },
   { id: "skills", label: "Skills", file: "stack.json", tone: "paper", icon: Sparkles },
   { id: "resume", label: "Résumé", file: "hridi.pdf", tone: "sun", icon: FileText },
@@ -55,13 +53,11 @@ const skills = [
   ["Tools", "AWS, Azure, Docker, Git, MongoDB, Jira, Postman"],
 ];
 
-const placeholderProjectLink = "https://github.com/hridiukani";
 
 const projects: Array<{ name: string; meta: string; accent: "sun" | "olive" | "rose"; description: string; link: string }> = [
-  { name: "Cincin", meta: "Next.js · FastAPI · PostGIS", accent: "sun", description: "An autonomous AI pipeline indexing 600+ Phoenix venues for Happy Hour deals.", link: placeholderProjectLink },
-  { name: "FlowDesk", meta: "Spring Boot · React · PostgreSQL", accent: "olive", description: "A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.", link: placeholderProjectLink },
-  { name: "SERA", meta: "Hackathon winner · AI/RAG", accent: "rose", description: "A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.", link: placeholderProjectLink },
-  { name: "SignSpeak", meta: "Python · OpenCV", accent: "rose", description: "A real-time ASL to English translator with over 90% accuracy on test set.", link: placeholderProjectLink },
+  { name: "Cincin", meta: "Next.js · FastAPI · PostGIS", accent: "sun", description: "An autonomous AI pipeline indexing 600+ Phoenix venues for Happy Hour deals.", link: "https://cincin-alpha.vercel.app" },
+  { name: "FlowDesk", meta: "Spring Boot · React · PostgreSQL", accent: "olive", description: "A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.", link: "https://github.com/hridiukani/SDA-IT-Ticket-Management-System" },
+  { name: "SERA", meta: "Hackathon winner · AI/RAG", accent: "rose", description: "A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.", link: "https://ai-sex-doc-front-end.vercel.app/"},
 ];
 
 export default function Portfolio() {
@@ -300,7 +296,13 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
   }
 
   if (id === "projects") {
-    return <ProjectsCarousel />;
+    return (
+      <div className="grid gap-3 p-4 sm:grid-cols-3">
+        {projects.map((project) => (
+          <ProjectCard key={project.name} {...project} />
+        ))}
+      </div>
+    );
   }
 
   if (id === "experience") {
@@ -357,41 +359,6 @@ function MiniTag({ children }: { children: ReactNode }) {
   return <span className="mini-tag">{children}</span>;
 }
 
-function ProjectsCarousel() {
-  const pageSize = 3;
-  const pageCount = Math.ceil(projects.length / pageSize);
-  const [page, setPage] = useState(0);
-  const visible = projects.slice(page * pageSize, page * pageSize + pageSize);
-
-  return (
-    <div className="flex items-center gap-2 p-4 sm:p-5">
-      <button
-        type="button"
-        className="carousel-arrow"
-        onClick={() => setPage((p) => Math.max(0, p - 1))}
-        disabled={page === 0}
-        aria-label="Previous projects"
-      >
-        <ChevronLeft className="size-4" />
-      </button>
-      <div className="grid flex-1 gap-3 sm:grid-cols-3">
-        {visible.map((project) => (
-          <ProjectCard key={project.name} {...project} />
-        ))}
-      </div>
-      <button
-        type="button"
-        className="carousel-arrow"
-        onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
-        disabled={page === pageCount - 1}
-        aria-label="Next projects"
-      >
-        <ChevronRight className="size-4" />
-      </button>
-    </div>
-  );
-}
-
 function ProjectCard({ name, meta, accent, description, link }: { name: string; meta: string; accent: string; description: string; link: string }) {
   return (
     <article className={`project-card project-card-${accent}`}>
@@ -401,7 +368,7 @@ function ProjectCard({ name, meta, accent, description, link }: { name: string; 
       </div>
       <p className="mt-1 text-[10px] font-bold uppercase text-muted-foreground">{meta}</p>
       <p className="mt-3 text-xs leading-relaxed sm:text-sm">{description}</p>
-      <a className="window-action-secondary mt-3" href={link} target="_blank" rel="noreferrer">
+      <a className="window-action-rose mt-3" href={link} target="_blank" rel="noreferrer">
         Explore project <ExternalLink className="size-4" />
       </a>
     </article>
