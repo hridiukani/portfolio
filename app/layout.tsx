@@ -4,6 +4,9 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Hridi Ukani | Software Engineer',
   description: "Hridi Ukani's interactive software engineering portfolio.",
+  icons: {
+    icon: '/monogram.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
