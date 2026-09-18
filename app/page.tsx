@@ -66,7 +66,7 @@ const projects: Array<{ name: string; meta: string; accent: "sun" | "olive" | "r
 ];
 
 export default function Portfolio() {
-  const [booted, setBooted] = useState(true);
+  const [booted, setBooted] = useState(false);
   const [openWindows, setOpenWindows] = useState<WindowState[]>([
     { id: "about", position: null, zIndex: 40 },
   ]);
