@@ -46,6 +46,10 @@ const desktopPositions = [
   "desktop-position-right-two",
 ] as const;
 
+// Mobile only: these folders render above the open window; the rest render below it.
+// Desktop positioning is unaffected since icons are placed via desktopPositions above, not DOM order.
+const mobileTopIds = new Set<WindowId>(["about", "resume"]);
+
 const skills = [
   ["Languages", "JavaScript, TypeScript, Java, Python, C/C++, SQL, Go"],
   ["Frontend", "React, Next.js, Angular, HTML, CSS"],
@@ -156,9 +160,11 @@ export default function Portfolio() {
       </header>
 
       <section ref={canvasRef} className="desktop-canvas" aria-label="Hridi's portfolio desktop">
-        <div className="desktop-shortcuts" aria-label="Portfolio folders">
+        <div className="desktop-shortcuts desktop-shortcuts-top" aria-label="Portfolio folders">
           {desktopItems.map((item, index) => (
-            <DesktopIcon key={item.id} {...item} index={index} onOpen={() => openWindow(item.id)} />
+            mobileTopIds.has(item.id) ? (
+              <DesktopIcon key={item.id} {...item} index={index} onOpen={() => openWindow(item.id)} />
+            ) : null
           ))}
         </div>
 
@@ -189,6 +195,14 @@ export default function Portfolio() {
             <span className="text-sm">Open a folder to explore my work.</span>
           </button>
         ) : null}
+
+        <div className="desktop-shortcuts desktop-shortcuts-bottom" aria-label="Portfolio folders">
+          {desktopItems.map((item, index) => (
+            mobileTopIds.has(item.id) ? null : (
+              <DesktopIcon key={item.id} {...item} index={index} onOpen={() => openWindow(item.id)} />
+            )
+          ))}
+        </div>
 
       </section>
 
