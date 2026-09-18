@@ -48,7 +48,7 @@ const desktopPositions = [
 
 // Mobile only: these folders render above the open window; the rest render below it.
 // Desktop positioning is unaffected since icons are placed via desktopPositions above, not DOM order.
-const mobileTopIds = new Set<WindowId>(["about", "resume"]);
+const mobileTopIds = new Set<WindowId>(["about", "experience", "resume"]);
 
 const skills = [
   ["Languages", "JavaScript, TypeScript, Java, Python, C/C++, SQL, Go"],

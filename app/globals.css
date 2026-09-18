@@ -320,8 +320,8 @@
   .desktop-shell { overflow: auto; }
   .desktop-canvas { display: flex; min-height: calc(100dvh - 88px); flex-direction: column; padding: 1rem 1rem 6.5rem; }
   .desktop-shortcuts { position: static; display: grid; gap: 1.25rem .5rem; }
-  .desktop-shortcuts-top { order: 1; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 260px; margin: 0 auto 1.4rem; }
-  .desktop-shortcuts-bottom { order: 3; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.4rem; }
+  .desktop-shortcuts-top { order: 1; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 1.4rem; }
+  .desktop-shortcuts-bottom { order: 3; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 3rem; max-width: 260px; margin: 1.4rem auto 0; }
   .desktop-icon { position: static; width: auto; }
   .desktop-only-window { display: none; }
   .active-window { position: relative; left: auto; top: auto; order: 2; width: 100%; transform: none; animation: icon-rise .28s ease both; }
@@ -334,7 +334,7 @@
 }
 
 @media (max-width: 380px) {
-  .desktop-shortcuts-bottom { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .desktop-shortcuts-top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .system-bar { padding-inline: .65rem; }
 }
 
