@@ -367,7 +367,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
         <a className="window-action" href={resumeUrl} target="_blank" rel="noreferrer">
           Open résumé <ExternalLink className="size-4" />
         </a>
-        <a className="window-action-secondary" href={resumeUrl} download="HridiUkani_SWEResume.pdf">
+        <a className="window-action-secondary" href={resumeUrl} download="HridiUkani_Resume.pdf">
           Download <Download className="size-4" />
         </a>
       </div>

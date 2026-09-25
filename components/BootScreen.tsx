@@ -15,7 +15,7 @@ const MESSAGES = [
   { text: '[ OK ]  verifying gpa: 3.9  ✓'               },
   { text: '[ OK ]  connecting to arizona state univ...'  },
   { text: '[ OK ]  loading portfolio database...'         },
-  { text: '[ OK ]  connecting to hridiukani.vercel.app...' },
+  { text: '[ OK ]  connecting to hridi.space...' },
   { text: ''                                              },
   { text: '  all systems go.  welcome back, hridi  ♥',   style: 'success'  },
 ];
