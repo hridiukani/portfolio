@@ -1,6 +1,8 @@
 'use client';
 import {
   BriefcaseBusiness,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Download,
   ExternalLink,
@@ -316,13 +318,7 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
   }
 
   if (id === "projects") {
-    return (
-      <div className="grid gap-3 p-4 sm:grid-cols-3">
-        {projects.map((project) => (
-          <ProjectCard key={project.name} {...project} />
-        ))}
-      </div>
-    );
+    return <ProjectsCarousel />;
   }
 
   if (id === "experience") {
@@ -377,6 +373,57 @@ function WindowContent({ id, onOpen }: { id: WindowId; onOpen: (id: WindowId) =>
 
 function MiniTag({ children }: { children: ReactNode }) {
   return <span className="mini-tag">{children}</span>;
+}
+
+function ProjectsCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(projects.length <= 3);
+
+  const updateEdges = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    setAtStart(track.scrollLeft <= 1);
+    setAtEnd(track.scrollLeft >= track.scrollWidth - track.clientWidth - 1);
+  };
+
+  const scrollByCard = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    const firstCard = track?.firstElementChild as HTMLElement | null;
+    if (!track || !firstCard) return;
+    const gap = parseFloat(getComputedStyle(track).columnGap || "0");
+    track.scrollBy({ left: direction * (firstCard.offsetWidth + gap), behavior: "smooth" });
+  };
+
+  return (
+    <div className="flex items-center gap-2 p-4 sm:p-5">
+      <button
+        type="button"
+        className="carousel-arrow"
+        onClick={() => scrollByCard(-1)}
+        disabled={atStart}
+        aria-label="Previous projects"
+      >
+        <ChevronLeft className="size-4" />
+      </button>
+      <div ref={trackRef} className="project-carousel" onScroll={updateEdges}>
+        {projects.map((project) => (
+          <div key={project.name} className="project-carousel-item">
+            <ProjectCard {...project} />
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        className="carousel-arrow"
+        onClick={() => scrollByCard(1)}
+        disabled={atEnd}
+        aria-label="Next projects"
+      >
+        <ChevronRight className="size-4" />
+      </button>
+    </div>
+  );
 }
 
 function ProjectCard({ name, meta, accent, description, link }: { name: string; meta: string; accent: string; description: string; link: string }) {

@@ -310,6 +310,17 @@
 @utility project-card-rose { background: color-mix(in oklab, var(--rose) 28%, var(--paper)); }
 @utility project-card-olive { background: color-mix(in oklab, var(--olive) 20%, var(--paper)); }
 
+@utility project-carousel {
+  display: flex;
+  flex: 1;
+  gap: .75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+@utility project-carousel-item { flex: 0 0 calc((100% - 1.5rem) / 3); scroll-snap-align: start; }
+
 @utility social-link { display: flex; height: 34px; align-items: center; gap: .4rem; border: 2px solid var(--ink); border-radius: 3px; background: var(--paper); color: var(--ink); padding: 0 .65rem; font-size: .72rem; font-weight: 800; box-shadow: 2px 2px 0 var(--ink); }
 @utility welcome-note { position: absolute; left: 50%; top: 46%; display: flex; transform: translate(-50%, -50%) rotate(-1deg); flex-direction: column; border: 2px solid var(--ink); background: var(--sun); padding: 1.25rem 1.5rem; box-shadow: var(--shadow-window); cursor: pointer; }
 
@@ -330,6 +341,7 @@
   .contact-dock-inner { width: calc(100% - 2rem); justify-content: center; }
   .contact-dock .social-link { min-width: 0; flex: 1; justify-content: center; padding-inline: .35rem; }
   .project-card { min-height: 0; }
+  .project-carousel-item { flex-basis: 100%; }
   .welcome-note { position: relative; left: auto; top: auto; order: 2; transform: rotate(-1deg); }
 }
 
