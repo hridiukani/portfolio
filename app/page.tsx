@@ -176,7 +176,7 @@ export default function Portfolio() {
         {openWindows.map((openWindowItem) => (
           <div
             key={openWindowItem.id}
-            className={`active-window ${openWindowItem.position ? "active-window-moved" : ""}`}
+            className={`active-window ${openWindowItem.id === "projects" ? "active-window-wide" : ""} ${openWindowItem.position ? "active-window-moved" : ""}`}
             style={{ ...openWindowItem.position, zIndex: openWindowItem.zIndex }}
             role="dialog"
             aria-label={`${openWindowItem.id} window`}
@@ -438,7 +438,7 @@ function ProjectCard({ name, meta, accent, description, link }: { name: string; 
       </div>
       <p className="mt-1 text-[10px] font-bold uppercase text-muted-foreground">{meta}</p>
       <p className="mt-3 text-xs leading-relaxed sm:text-sm">{description}</p>
-      <a className="window-action-rose mt-3" href={link} target="_blank" rel="noreferrer">
+      <a className="window-action-rose mt-auto pt-3" href={link} target="_blank" rel="noreferrer">
         Explore project <ExternalLink className="size-4" />
       </a>
     </article>
