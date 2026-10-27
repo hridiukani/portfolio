@@ -34,7 +34,7 @@ const desktopItems: Array<{
   icon: typeof UserRound;
 }> = [
   { id: "about", label: "About me", file: "hello.txt", tone: "sun", icon: UserRound },
-  { id: "projects", label: "Projects", file: "3 items", tone: "rose", icon: Code2 },
+  { id: "projects", label: "Projects", file: "6 items", tone: "rose", icon: Code2 },
   { id: "experience", label: "Experience", file: "timeline.log", tone: "olive", icon: BriefcaseBusiness },
   { id: "skills", label: "Skills", file: "stack.json", tone: "paper", icon: Sparkles },
   { id: "resume", label: "Résumé", file: "hridi.pdf", tone: "sun", icon: FileText },
@@ -62,12 +62,12 @@ const skills = [
 
 
 const projects: Array<{ name: string; meta: string; accent: "sun" | "olive" | "rose"; description: string; link: string }> = [
-  { name: "Cincin", meta: "Next.js · FastAPI · PostGIS", accent: "sun", description: "An autonomous AI pipeline indexing 600+ Phoenix venues for Happy Hour deals.", link: "https://cincin.hridi.space" },
-  { name: "FlowDesk", meta: "Spring Boot · React · PostgreSQL", accent: "olive", description: "A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.", link: "https://github.com/hridiukani/SDA-IT-Ticket-Management-System" },
-  { name: "SERA", meta: "Hackathon winner · AI/RAG", accent: "rose", description: "A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.", link: "https://ai-sex-doc-front-end.vercel.app/"},
-  { name: "SignSpeak", meta: "Python · OpenCV · MediaPipe", accent: "sun", description: "A browser tool that reads American Sign Language hand signs through your webcam and translates them into text in real time.", link: "https://github.com/hridiukani" },
-  { name: "License Plate Recognition System", meta: "Python · OpenCV · TensorFlow", accent: "olive", description: "A computer vision tool that automatically reads license plates from photos, the kind of tech used for tolls and parking systems.", link: "https://github.com/hridiukani" },
   { name: "Akeso", meta: "Python · Docker · LLM agents", accent: "rose", description: "An AI agent that finds and fixes bugs in Python and SQL code on its own, testing each fix inside a safe sandbox before accepting it.", link: "https://github.com/hridiukani/Akeso" },
+  { name: "Cincin", meta: "Next.js · FastAPI · PostGIS", accent: "sun", description: "An AI tool that automatically finds and maps happy hour and lunch deals across Phoenix by reading restaurant websites for you.", link: "https://cincin.hridi.space" },
+  { name: "FlowDesk", meta: "Java · Spring Boot · React", accent: "olive", description: "An IT help-desk app that tracks support tickets and automatically assigns them to the right person, built to stay fast under heavy traffic.", link: "https://github.com/hridiukani/SDA-IT-Ticket-Management-System" },
+  { name: "SignSpeak", meta: "Python · OpenCV · MediaPipe", accent: "sun", description: "A browser tool that reads American Sign Language hand signs through your webcam and translates them into text in real time.", link: "https://github.com/hridiukani" },
+  { name: "SERA", meta: "🏆 Hackathon winner · AI/RAG", accent: "rose", description: "An AI chatbot that answers sensitive health questions by voice, which won 1st place at a hackathon and was later turned into a production-ready app.", link: "https://ai-sex-doc-front-end.vercel.app/" },
+  { name: "License Plate Recognition System", meta: "Python · OpenCV · TensorFlow", accent: "olive", description: "A computer vision tool that automatically reads license plates from photos, the kind of tech used for tolls and parking systems.", link: "https://github.com/hridiukani" },
 ];
 
 export default function Portfolio() {
