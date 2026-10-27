@@ -64,9 +64,9 @@ const skills = [
 const projects: Array<{ name: string; meta: string; accent: "sun" | "olive" | "rose"; description: string; link: string }> = [
   { name: "Akeso", meta: "Python · Docker · LLM agents", accent: "rose", description: "An AI agent that finds and fixes bugs in Python and SQL code on its own, testing each fix inside a safe sandbox before accepting it.", link: "https://github.com/hridiukani/Akeso" },
   { name: "Cincin", meta: "Next.js · FastAPI · PostGIS", accent: "sun", description: "An AI tool that automatically finds and maps happy hour and lunch deals across Phoenix by reading restaurant websites for you.", link: "https://cincin.hridi.space" },
+  { name: "SERA", meta: "Hackathon winner · AI/RAG", accent: "rose", description: "An AI chatbot that answers sensitive health questions by voice, which won 1st place at a hackathon and was later turned into a production-ready app.", link: "https://ai-sex-doc-front-end.vercel.app/" },
   { name: "FlowDesk", meta: "Java · Spring Boot · React", accent: "olive", description: "An IT help-desk app that tracks support tickets and automatically assigns them to the right person, built to stay fast under heavy traffic.", link: "https://github.com/hridiukani/SDA-IT-Ticket-Management-System" },
   { name: "SignSpeak", meta: "Python · OpenCV · MediaPipe", accent: "sun", description: "A browser tool that reads American Sign Language hand signs through your webcam and translates them into text in real time.", link: "https://github.com/hridiukani" },
-  { name: "SERA", meta: "🏆 Hackathon winner · AI/RAG", accent: "rose", description: "An AI chatbot that answers sensitive health questions by voice, which won 1st place at a hackathon and was later turned into a production-ready app.", link: "https://ai-sex-doc-front-end.vercel.app/" },
   { name: "License Plate Recognition System", meta: "Python · OpenCV · TensorFlow", accent: "olive", description: "A computer vision tool that automatically reads license plates from photos, the kind of tech used for tolls and parking systems.", link: "https://github.com/hridiukani" },
 ];
 
