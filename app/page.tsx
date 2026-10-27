@@ -65,6 +65,7 @@ const projects: Array<{ name: string; meta: string; accent: "sun" | "olive" | "r
   { name: "Cincin", meta: "Next.js · FastAPI · PostGIS", accent: "sun", description: "An autonomous AI pipeline indexing 600+ Phoenix venues for Happy Hour deals.", link: "https://cincin.hridi.space" },
   { name: "FlowDesk", meta: "Spring Boot · React · PostgreSQL", accent: "olive", description: "A role-aware IT helpdesk supporting 100+ users, with real-time tickets and 70% faster retrievals.", link: "https://github.com/hridiukani/SDA-IT-Ticket-Management-System" },
   { name: "SERA", meta: "Hackathon winner · AI/RAG", accent: "rose", description: "A voice-driven sexual health chatbot built in 24 hours with streaming, retrieval, and session persistence.", link: "https://ai-sex-doc-front-end.vercel.app/"},
+  { name: "SignSpeak", meta: "Python · OpenCV · MediaPipe", accent: "sun", description: "A browser tool that reads American Sign Language hand signs through your webcam and translates them into text in real time.", link: "https://github.com/hridiukani" },
 ];
 
 export default function Portfolio() {
